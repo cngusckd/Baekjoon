@@ -8,9 +8,16 @@ for i in range(N):
     weight, value = map(int, sys.stdin.readline().split())
     weight_and_value.append([weight, value])
 
-weight_and_value.sort(key = lambda x:x[0])  # 일단 key값 기준으로 오름차순 정렬시킴 ( WEIGHT 값 기준으로 )
-
-answer = []
-for i in range(N):
-    if i == 0:
-        answer.append([weight_and_value[0],K - weight_and_value[1], 0, K])
+def solution(i, N, K):
+    if i < N-1:
+        if K - weight_and_value[i][0] < 0:
+            return 0
+        else:
+            return max(solution(i+1, N, K - weight_and_value[i][0]) + weight_and_value[i][1], solution(i+1, N, K))
+    else:
+        if K - weight_and_value[i][0] < 0:
+            return 0
+        else:
+            return weight_and_value[i][1]
+        
+print(f"answer = {solution(0, N, K)} ")
